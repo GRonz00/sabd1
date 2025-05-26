@@ -1,0 +1,15 @@
+apiVersion: 1
+
+datasources:
+  - name: mongo
+    type: meln5674-mongodb-community
+    access: proxy
+    isDefault: true
+    editable: true
+    jsonData:
+      url: "mongodb://mongo:27017"
+      username: $MONGO_USERNAME
+    secureJsonData:
+      username: $MONGO_USERNAME
+      password: $MONGO_PASSWORD
+    uid: mongo
