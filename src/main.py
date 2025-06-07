@@ -1,11 +1,10 @@
-import csv
 import os
 import time
 
 from pyspark.sql import SparkSession, DataFrame
 from typing import Callable, Dict, Tuple, List
 
-from pyspark.sql.functions import col, year, month, to_date,  avg, lit
+from pyspark.sql.functions import col, year, month, to_date,  avg
 from pyspark.sql.functions import min as minspa
 from pyspark.sql.functions import max as maxspa
 
@@ -91,7 +90,7 @@ def save_to_mongo(df: DataFrame, collection: str, mode="overwrite"):
 
 def query2_df(df: DataFrame):
 
-    # Step 2: Raggruppamento per (anno, mese) e medie
+    # Step 1: Raggruppamento per (anno, mese) e medie
     df_grouped = (
         df.groupBy("year", "month")
         .agg(
@@ -100,7 +99,7 @@ def query2_df(df: DataFrame):
         )
     )
 
-    # Step 3: Ordinamenti diversi
+    # Step 2: Ordinamenti diversi
     top5_carbon_desc = df_grouped.orderBy("avg_carbon_intensity", ascending=False).limit(5)
     top5_carbon_asc = df_grouped.orderBy("avg_carbon_intensity", ascending=True).limit(5)
 
@@ -284,4 +283,4 @@ def get_time():
 
     spark1.stop()
 if __name__ == "__main__":
-    get_time()
+    graphic()
